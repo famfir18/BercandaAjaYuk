@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/image_anim"
+        android:layout_width="550dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-50dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/background_beach"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="-50dp"
+            android:fontFamily="@font/bungee_inline"
+            android:text="Ngakak Aja Yuk!"
+            android:textColor="#FFFFFF"
+            android:visibility="invisible"
+            android:textSize="30sp" />
+
+        <ImageButton
+            android:id="@+id/btn_start_game"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_marginTop="500dp"
+            android:backgroundTint="#00855F5F"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/selector_start_game" />
+    </LinearLayout>
+
+
+</FrameLayout>
