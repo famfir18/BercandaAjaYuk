@@ -2,6 +2,7 @@ package com.example.ngakakajayuk;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
@@ -11,21 +12,37 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.title)
+    ImageView ivTitle;
+    @BindView(R.id.layout_nickname)
+    RelativeLayout layoutNickname;
+    @BindView(R.id.et_nickname)
+    EditText etNickname;
 
     AnimationDrawable animation;
     MediaPlayer mediaPlayer;
     MediaPlayer click;
-    ImageButton startGame;
-    TextView title;
+    ImageButton confirm;
 
     Handler handler = new Handler();
-    final static int DELAY = 2000;
+    final static int DELAY = 500;
+
+    Handler nickname = new Handler();
+    final static int DELAYS = 2000;
 
 
     @Override
@@ -33,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.anim_scale);
+        ButterKnife.bind(this);
+
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_scale_title);
         final Animation animFade = AnimationUtils.loadAnimation(this, R.anim.anim_fade);
 
-
-        startGame = findViewById(R.id.btn_start_game);
-        title = findViewById(R.id.title);
+        confirm = findViewById(R.id.btn_confirm);
 
         ImageView image = findViewById(R.id.image_anim);
        /* image.setBackgroundResource(R.drawable.animation_menu);
@@ -53,26 +70,32 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
-        handler.postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                startGame.setVisibility(View.VISIBLE);
-                startGame.startAnimation(animScale);
-
-                title.setVisibility(View.VISIBLE);
-                title.setAnimation(animFade);
-
-            }
-            //your code start with delay in one second after calling this method
+        //your code start with delay in one second after calling this method
+        handler.postDelayed(() -> {
+            ivTitle.setVisibility(View.VISIBLE);
+            ivTitle.startAnimation(animScaleTitle);
         }, DELAY);
 
+        nickname.postDelayed(() -> {
+            layoutNickname.setVisibility(View.VISIBLE);
+            layoutNickname.setAnimation(animFade);
+        }, DELAYS);
 
-        startGame.setOnClickListener(new View.OnClickListener() {
+
+
+
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 click.start();
-                Intent i = new Intent(MainActivity.this,GameActivity.class);
-                startActivity(i);
+                if (etNickname.getText().length() < 5) {
+                    Snackbar.make(v, "Masukkan minimal 5 karakter", Snackbar.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Intent i = new Intent(MainActivity.this,MenuActivity.class);
+                    i.putExtra("nickName", etNickname.getText().toString());
+                    startActivity(i);
+                }
             }
         });
 
@@ -80,10 +103,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
+//        mediaPlayer.stop();
+//        mediaPlayer.release();
+
+        super.onDestroy();
+
+    }
+
+    @Override
+    public void onPause() {
         mediaPlayer.stop();
         mediaPlayer.release();
 
-        super.onDestroy();
+        super.onPause();
 
     }
 }

@@ -39,7 +39,7 @@ public class Splashscreen extends AppCompatActivity {
         tvLogo = findViewById(R.id.tv_logo_dev);
 
         final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.anim_scale);
-        final Animation animFade = AnimationUtils.loadAnimation(this, R.anim.anim_fade);
+        final Animation animFade = AnimationUtils.loadAnimation(this, R.anim.anim_fade_penpen);
 
         logo.startAnimation(animScale);
         tvLogo.startAnimation(animFade);

@@ -26,10 +26,10 @@
             android:id="@+id/tv_logo_dev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/bangers"
+            android:fontFamily="@font/peawalker"
             android:textColor="#fff"
-            android:text="pen-pen games"
-            android:textSize="36sp" />
+            android:text="Pen-Pen Games"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
