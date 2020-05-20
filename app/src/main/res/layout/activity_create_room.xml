@@ -25,8 +25,9 @@
         <ImageView
             android:id="@+id/title"
             android:src="@drawable/title"
+            android:scaleType="fitCenter"
             android:layout_width="wrap_content"
-            android:layout_height="170dp"/>
+            android:layout_height="270dp"/>
 
 
         <LinearLayout
@@ -65,7 +66,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/btn_create_room_press" />
 
-            <TextView
+           <!-- <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/doodle"
@@ -89,7 +90,7 @@
                 android:textColor="#FFF"
                 android:fontFamily="@font/chalkduster"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/btn_join_game" />
+                android:background="@drawable/btn_join_game" />-->
 
             <TextView
                 android:layout_width="wrap_content"

@@ -3,7 +3,7 @@ package com.example.ngakakajayuk.Data.JSON;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DataCreateRoom {
+public class DataRoom {
     @SerializedName("id_room")
     @Expose
     private  String idRoom;

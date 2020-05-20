@@ -68,6 +68,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MenuActivity.this, CreateRoomActivity.class);
                 click.start();
+                i.putExtra("nickName", textNick);
                 startActivity(i);
             }
         });
@@ -77,6 +78,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MenuActivity.this, JoinRoomActivity.class);
                 click.start();
+                i.putExtra("nickName", textNick);
                 startActivity(i);
             }
         });
