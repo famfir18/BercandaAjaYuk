@@ -63,6 +63,7 @@ public class JoinRoomActivity extends AppCompatActivity {
 
         gettingIDRoom();
 
+        //OnClick Button Join
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +109,7 @@ public class JoinRoomActivity extends AppCompatActivity {
         });
     }
 
+    //Method buat looping buat cari idRoom
     private void gettingIDRoom() {
 
         RestService restService = APIClient.joinRoom().create(RestService.class);
