@@ -128,98 +128,91 @@ public class JoinRoomActivity extends AppCompatActivity {
                 pemain5 = response.body().getPemain5();
                 int pertanyaanNow = response.body().getPertanyaanNow();
                 int jumlahPemain = response.body().getJumlahPemain();
+                String passwordRuangan = response.body().getRoomPassword();
+
+                if (!passwordRoom.equals(passwordRuangan)){
+                    Toast.makeText(getApplicationContext(), "Password Salah", Toast.LENGTH_LONG).show();
+                } else {
 
 //                    idRoom = etRoomCode.getText().toString();
                     System.out.println("id room " + idRoom);
 
-                if (jumlahPemain == 5){
-                    if (pemain2 == null){
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(5);
-                        dataRoom.setPemain2(textNick.trim());
-                    } else if (!pemain2.equals("") && pemain3 == null){
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(5);
-                        dataRoom.setPemain3(textNick.trim());
-                    } else if (!pemain3.equals("") && pemain4 == null){
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(5);
-                        dataRoom.setPemain4(textNick.trim());
-                    } else if (!pemain4.equals("") && pemain5 == null){
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(5);
-                        dataRoom.setPemain5(textNick.trim());
-                    } else {
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(4);
-                        Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_LONG).show();
+                    if (jumlahPemain == 5){
+                        if (pemain2 == null){
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(5);
+                            dataRoom.setPemain2(textNick.trim());
+                        } else if (!pemain2.equals("") && pemain3 == null){
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(5);
+                            dataRoom.setPemain3(textNick.trim());
+                        } else if (!pemain3.equals("") && pemain4 == null){
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(5);
+                            dataRoom.setPemain4(textNick.trim());
+                        } else if (!pemain4.equals("") && pemain5 == null){
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(5);
+                            dataRoom.setPemain5(textNick.trim());
+                        } else {
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(4);
+                            Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_LONG).show();
+                        }
+                    } else if (jumlahPemain == 4){
+                        if (pemain2 == null){
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(4);
+                            dataRoom.setPemain2(textNick.trim());
+                        } else if (!pemain2.equals("") && pemain3 == null){
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(4);
+                            dataRoom.setPemain3(textNick.trim());
+                        } else if (!pemain3.equals("") && pemain4 == null){
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(4);
+                            dataRoom.setPemain4(textNick.trim());
+                        } else {
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(4);
+                            Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_LONG).show();
+                        }
+                    } else if (jumlahPemain == 3) {
+                        if (pemain2 == null) {
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(3);
+                            dataRoom.setPemain2(textNick.trim());
+                        } else if (!pemain2.equals("") && pemain3 == null) {
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(3);
+                            dataRoom.setPemain3(textNick.trim());
+                        } else {
+                            dataRoom.setPertanyaanNow(pertanyaanNow);
+                            dataRoom.setJumlahPemain(3);
+                            Toast.makeText(getApplicationContext(), "Room Sudah Penuh", Toast.LENGTH_LONG).show();
+                        }
                     }
-                } else if (jumlahPemain == 4){
-                    if (pemain2 == null){
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(4);
-                        dataRoom.setPemain2(textNick.trim());
-                    } else if (!pemain2.equals("") && pemain3 == null){
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(4);
-                        dataRoom.setPemain3(textNick.trim());
-                    } else if (!pemain3.equals("") && pemain4 == null){
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(4);
-                        dataRoom.setPemain4(textNick.trim());
-                    } else {
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(4);
-                        Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_LONG).show();
-                    }
-                } else if (jumlahPemain == 3) {
-                    if (pemain2 == null) {
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(3);
-                        dataRoom.setPemain2(textNick.trim());
-                    } else if (!pemain2.equals("") && pemain3 == null) {
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(3);
-                        dataRoom.setPemain3(textNick.trim());
-                    } else {
-                        dataRoom.setPertanyaanNow(pertanyaanNow);
-                        dataRoom.setJumlahPemain(3);
-                        Toast.makeText(getApplicationContext(), "Room Sudah Penuh", Toast.LENGTH_LONG).show();
-                    }
-                }
 
 //                RestService restService = APIClient.joinRoom().create(RestService.class);
-                Call<DataRoom> call = restService.JoinRoom(dataRoom, codeRoom);
+                    Call<DataRoom> call = restService.JoinRoom(dataRoom, codeRoom);
 
-                System.out.println("Kodenyaa : " + codeRoom);
+                    System.out.println("Kodenyaa : " + codeRoom);
 
 
-                call.enqueue(new Callback<DataRoom>() {
-                    @Override
-                    public void onResponse(Call<DataRoom> call, Response<DataRoom> response) {
+                    call.enqueue(new Callback<DataRoom>() {
+                        @Override
+                        public void onResponse(Call<DataRoom> call, Response<DataRoom> response) {
 
-                               /* pemain2 = response.body().getPemain2();
-                                System.out.println("Pemain 2 : " + pemain2);
-                                pemain3 = response.body().getPemain3();
-                                pemain4 = response.body().getPemain4();
-                                pemain5 = response.body().getPemain5();*/
 
-                              /*  if (jumlahPemain == 0){
-                                    if (pemain2 == null){
-                                        dataRoom.setPemain2(textNick.trim());
-                                    } else if (!pemain2.matches("")){
-                                        dataRoom.setPemain3(textNick.trim());
-                                    } else if (!pemain3.matches("")){
-                                        dataRoom.setPemain4(textNick.trim());
-                                    }
-                                }*/
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(Call<DataRoom> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<DataRoom> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
 
             }
 
