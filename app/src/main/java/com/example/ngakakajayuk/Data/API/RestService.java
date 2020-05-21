@@ -29,10 +29,10 @@ public interface RestService {
 
     @Headers({"Content-Type: application/json"})
     @PUT("ruang/{id_room}/")
-    Call<ResponseBody> JoinRoom(@Body DataRoom dataRoom,
+    Call<DataRoom> JoinRoom(@Body DataRoom dataRoom,
                                 @Path("id_room") String idRoom);
 
-    @GET("ruang/")
-    Call<List<DataRoom>> GetInfoRoom();
+    @GET("ruang/{id_room}/")
+    Call<DataRoom> GetInfoRoom(@Path("id_room") String idRoom);
 
 }
