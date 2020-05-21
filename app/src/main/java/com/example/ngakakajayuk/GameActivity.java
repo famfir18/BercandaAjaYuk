@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ngakakajayuk.Adapter.AnswerAdapter;
@@ -19,7 +22,6 @@ import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +41,13 @@ public class GameActivity extends AppCompatActivity
     List<DataAnswer> myList;
     AnswerAdapter recyclerAdapter;
 
+    Dialog beforeGameStarted;
+    Dialog dialogExit;
+
+    String texIdRooms;
+
+    MediaPlayer click;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,17 +55,58 @@ public class GameActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
 
+        click = MediaPlayer.create(this,R.raw.click_effect);
+
+        beforeGameStarted = new Dialog(this);
 
         contentQuestion = findViewById(R.id.content_question);
+
+
+        dialogExit = new Dialog(this);
 
         bgm = MediaPlayer.create(this, R.raw.bgm);
         bgm.setLooping(true);
         bgm.start();
 
         getDataQuestion();
-
         getDataAnswer();
+        displayDialog();
 
+    }
+
+    private void displayDialog() {
+        Button shareId;
+        TextView idRoom;
+
+        Intent getIntent = getIntent();
+        texIdRooms = getIntent.getStringExtra("idRoom");
+
+        beforeGameStarted.setContentView(R.layout.dialog_before_game_started);
+
+        shareId = beforeGameStarted.findViewById(R.id.btn_share_id);
+        idRoom = beforeGameStarted.findViewById(R.id.tv_id_room);
+
+        System.out.println("Ini Game Act " + texIdRooms);
+
+        idRoom.setText(texIdRooms);
+
+        shareId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                click.start();
+                shareIdRoom();
+            }
+        });
+
+        beforeGameStarted.show();
+    }
+
+    private void shareIdRoom() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Ayo join room, room id nya adalah " + texIdRooms);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 
     private void getDataAnswer() {
@@ -151,6 +201,35 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void onSelected(DataAnswer dataTestSDG) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Button yes;
+        Button no;
+
+        dialogExit.setContentView(R.layout.dialog_exit);
+
+        yes = dialogExit.findViewById(R.id.btnYes);
+        no = dialogExit.findViewById(R.id.btnNo);
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogExit.dismiss();
+            }
+        });
+
+        dialogExit.show();
 
     }
 }

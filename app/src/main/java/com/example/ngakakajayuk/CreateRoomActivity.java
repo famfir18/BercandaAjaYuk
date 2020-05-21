@@ -3,6 +3,7 @@ package com.example.ngakakajayuk;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,14 +11,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.ngakakajayuk.Data.API.APIClient;
 import com.example.ngakakajayuk.Data.API.RestService;
 import com.example.ngakakajayuk.Data.JSON.DataQuestion;
 import com.example.ngakakajayuk.Data.JSON.DataRoom;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -42,8 +46,14 @@ public class CreateRoomActivity extends AppCompatActivity {
     DataRoom dataRoom;
 
     String textNick;
+    String idRoom;
+    String roomPassword;
+    String stringJumlahPemain;
 
     int jumlahPertanyan;
+    int jumlahPemain;
+
+    MediaPlayer click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +67,9 @@ public class CreateRoomActivity extends AppCompatActivity {
 
         dataRoom = new DataRoom();
 
-        shake = AnimationUtils.loadAnimation(this, R.anim.anim_shake);
+        click = MediaPlayer.create(this, R.raw.click_effect);
 
+        shake = AnimationUtils.loadAnimation(this, R.anim.anim_shake);
         System.out.println("Range : " + getRandomNumberInRange(1, 46));
 
         initEvent();
@@ -109,20 +120,39 @@ public class CreateRoomActivity extends AppCompatActivity {
 
     private void createRoom() {
 
+        stringJumlahPemain = etNoPlayer.getText().toString();
+        jumlahPemain = Integer.parseInt(stringJumlahPemain);
+        roomPassword = etRoomPassword.getText().toString();
+
+
         int random = getRandomNumberInRange(1,jumlahPertanyan);
-        String stringRandom = Integer.toString(random);
 
         DataRoom dataRoom = new DataRoom();
         dataRoom.setPemain1(textNick.trim());
-        dataRoom.setPertanyaanNow(stringRandom.trim());
+        dataRoom.setPertanyaanNow(random);
+        dataRoom.setRoomPassword(roomPassword);
+        dataRoom.setJumlahPemain(jumlahPemain);
 
         RestService restService = APIClient.createNewRoom().create(RestService.class);
-        Call<ResponseBody> call = restService.createNewRoom(dataRoom);
+        Call<DataRoom> call = restService.createNewRoom(dataRoom);
 
-
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<DataRoom>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<DataRoom> call, Response<DataRoom> response) {
+
+//                JsonObject post = new JsonObject().get(response.body().toString()).getAsJsonObject();
+                if(response.isSuccessful()){
+                    response.body(); // have your all data
+                    idRoom = response.body().getIdRoom();
+
+                    Intent i = new Intent(CreateRoomActivity.this, GameActivity.class);
+                    i.putExtra("idRoom", idRoom);
+                    System.out.println("Ini Create Act " + idRoom);
+                    startActivity(i);
+
+                    System.out.println("apaansiii " + idRoom);
+
+                } else   Toast.makeText(getApplicationContext(),response.errorBody().toString(), Toast.LENGTH_SHORT).show();
 
                 Log.i("Respone Body %s", String.valueOf(response.code()));
 
@@ -130,7 +160,7 @@ public class CreateRoomActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<DataRoom> call, Throwable t) {
 
             }
         });
@@ -160,11 +190,10 @@ public class CreateRoomActivity extends AppCompatActivity {
                     Snackbar.make(v, "Masukkan Room Password", Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
+                    click.start();
                     createRoom();
-//                    Intent i = new Intent(CreateRoomActivity.this, GameActivity.class);
-//                startActivity(i);
-                }
 
+                }
             }
         });
     }

@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-//        mediaPlayer.stop();
+//        medPlayer.stop();
 //        mediaPlayer.release();
 
         super.onDestroy();

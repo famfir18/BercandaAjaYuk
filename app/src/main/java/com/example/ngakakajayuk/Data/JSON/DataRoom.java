@@ -19,12 +19,64 @@ public class DataRoom {
     @SerializedName("pemain_4")
     @Expose
     private  String pemain4;
+    @SerializedName("pemain_5")
+    @Expose
+    private  String pemain5;
     @SerializedName("pertanyaan_now")
     @Expose
-    private  String pertanyaanNow;
+    private  int pertanyaanNow;
     @SerializedName("pertanyaan_past")
     @Expose
     private  String pertanyaanPast;
+    @SerializedName("pass_room")
+    @Expose
+    private  String roomPassword;
+    @SerializedName("pemenang_room")
+    @Expose
+    private  String pemenangRoom;
+    @SerializedName("jml_pemain")
+    @Expose
+    private  int jumlahPemain;
+
+    public int getJumlahPemain() {
+        return jumlahPemain;
+    }
+
+    public void setJumlahPemain(int jumlahPemain) {
+        this.jumlahPemain = jumlahPemain;
+    }
+
+    public String getPemain5() {
+        return pemain5;
+    }
+
+    public void setPemain5(String pemain5) {
+        this.pemain5 = pemain5;
+    }
+
+    public int getPertanyaanNow() {
+        return pertanyaanNow;
+    }
+
+    public void setPertanyaanNow(int pertanyaanNow) {
+        this.pertanyaanNow = pertanyaanNow;
+    }
+
+    public String getRoomPassword() {
+        return roomPassword;
+    }
+
+    public void setRoomPassword(String roomPassword) {
+        this.roomPassword = roomPassword;
+    }
+
+    public String getPemenangRoom() {
+        return pemenangRoom;
+    }
+
+    public void setPemenangRoom(String pemenangRoom) {
+        this.pemenangRoom = pemenangRoom;
+    }
 
     public String getIdRoom() {
         return idRoom;
@@ -66,13 +118,7 @@ public class DataRoom {
         this.pemain4 = pemain4;
     }
 
-    public String getPertanyaanNow() {
-        return pertanyaanNow;
-    }
 
-    public void setPertanyaanNow(String pertanyaanNow) {
-        this.pertanyaanNow = pertanyaanNow;
-    }
 
     public String getPertanyaanPast() {
         return pertanyaanPast;

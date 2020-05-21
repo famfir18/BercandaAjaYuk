@@ -25,7 +25,7 @@ public interface RestService {
     Call<List<DataAnswer>> getDataAnswer();
 
     @POST("ruang/")
-    Call<ResponseBody> createNewRoom(@Body DataRoom dataRoom);
+    Call<DataRoom> createNewRoom(@Body DataRoom dataRoom);
 
     @Headers({"Content-Type: application/json"})
     @PUT("ruang/{id_room}/")

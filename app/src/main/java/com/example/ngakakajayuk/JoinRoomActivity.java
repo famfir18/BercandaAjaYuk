@@ -12,7 +12,6 @@ import android.widget.EditText;
 
 import com.example.ngakakajayuk.Data.API.APIClient;
 import com.example.ngakakajayuk.Data.API.RestService;
-import com.example.ngakakajayuk.Data.JSON.DataQuestion;
 import com.example.ngakakajayuk.Data.JSON.DataRoom;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -62,52 +61,54 @@ public class JoinRoomActivity extends AppCompatActivity {
 
         Gson gson = new Gson();
 
-        getIdRoom();
-        System.out.println(gson.toJson(idRoom));
+        gettingIDRoom();
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etRoomCode.getText().toString().matches("")){
+                if (etRoomCode.getText().toString().matches("")) {
                     etRoomCode.startAnimation(shake);
                     Snackbar.make(v, "Masukkan Room Code", Snackbar.LENGTH_SHORT)
                             .show();
-                } else if (etRoomCode.getText().toString() != null && etRoomPassword.getText().toString().matches("")){
+                } else if (etRoomCode.getText().toString() != null && etRoomPassword.getText().toString().matches("")) {
                     etRoomPassword.startAnimation(shake);
                     Snackbar.make(v, "Masukkan Room Password", Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
-                    updateRoom();
+                    codeRoom = etRoomCode.getText().toString();
+
+                    DataRoom dataRoom = new DataRoom();
+                    dataRoom.setPemain2(textNick.trim());
+
+                    System.out.println("Setaaaan " + idRoom);
+
+                    if (!etRoomCode.getText().toString().equals(idRoom)) {
+                        Snackbar.make(v, "Room code tidak ditemukan/ salah, mohon teliti huruf kapital dalam pengisian room code", Snackbar.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        RestService restService = APIClient.joinRoom().create(RestService.class);
+                        Call<ResponseBody> call = restService.JoinRoom(dataRoom, codeRoom);
+
+                        System.out.println("Kodenyaa : " + codeRoom);
+
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
                 }
-    }
-
-    private void updateRoom() {
-        codeRoom = etRoomCode.getText().toString();
-
-        DataRoom dataRoom = new DataRoom();
-        dataRoom.setPemain2(textNick.trim());
-
-        RestService restService = APIClient.joinRoom().create(RestService.class);
-        Call<ResponseBody> call = restService.JoinRoom(dataRoom, codeRoom);
-
-        System.out.println("Kodenyaa : " + codeRoom);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
             }
         });
     }
-        });
-    }
 
-    private void getIdRoom() {
+    private void gettingIDRoom() {
 
         RestService restService = APIClient.joinRoom().create(RestService.class);
         Call<List<DataRoom>> call = restService.GetInfoRoom();
