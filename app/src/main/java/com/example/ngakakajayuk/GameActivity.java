@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity
     @BindView(R.id.rv_answer)
     RecyclerView recyclerView;
 
-    MediaPlayer bgm;
+//    MediaPlayer bgm;
     TextView contentQuestion;
 
     List<DataAnswer> myList;
@@ -64,9 +64,9 @@ public class GameActivity extends AppCompatActivity
 
         dialogExit = new Dialog(this);
 
-        bgm = MediaPlayer.create(this, R.raw.bgm);
-        bgm.setLooping(true);
-        bgm.start();
+//        bgm = MediaPlayer.create(this, R.raw.bgm);
+//        bgm.setLooping(true);
+//        bgm.start();
 
         getDataQuestion();
         getDataAnswer();
@@ -79,7 +79,9 @@ public class GameActivity extends AppCompatActivity
         TextView idRoom;
 
         Intent getIntent = getIntent();
-        texIdRooms = getIntent.getStringExtra("idRoom");
+        if (getIntent.getExtras() != null){
+            texIdRooms = getIntent.getStringExtra("idRoom");
+        }
 
         beforeGameStarted.setContentView(R.layout.dialog_before_game_started);
 
@@ -173,31 +175,31 @@ public class GameActivity extends AppCompatActivity
         });
     }
 
-    @Override
+    /*@Override
     public void onDestroy() {
         bgm.stop();
         bgm.release();
 
         super.onDestroy();
 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onPause() {
         bgm.stop();
         bgm.release();
 
         super.onPause();
 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onRestart() {
         bgm.start();
 
         super.onRestart();
 
-    }
+    }*/
 
     @Override
     public void onSelected(DataAnswer dataTestSDG) {
