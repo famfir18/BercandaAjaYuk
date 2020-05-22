@@ -34,9 +34,9 @@
                 android:id="@+id/layout_nickname"
                 android:layout_below="@+id/title"
                 android:layout_width="300dp"
-                android:visibility="invisible"
                 android:layout_centerHorizontal="true"
                 android:layout_height="300dp"
+                android:visibility="invisible"
                 android:background="@drawable/rounded"
                 android:orientation="vertical">
 
@@ -48,7 +48,7 @@
             android:gravity="center"
             android:layout_marginTop="55dp"
             android:textSize="23dp"
-            android:text="Enter Nickname"
+            android:text="Create Nickname"
             android:textColor="#FFF" />
 
 
@@ -59,7 +59,7 @@
             android:layout_centerHorizontal="true"
             android:ems="12"
             android:layout_below="@+id/nick"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textSize="15dp"

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.ngakakajayuk.Data.API.APIClient;
 import com.google.android.material.snackbar.Snackbar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -94,8 +95,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 click.start();
-                if (etNickname.getText().length() < 5) {
-                    Snackbar.make(v, "Masukkan minimal 5 karakter", Snackbar.LENGTH_SHORT)
+                if (etNickname.getText().length() == 0) {
+                    Snackbar.make(v, "Jangan dikosongin", Snackbar.LENGTH_SHORT)
+                            .show();
+                } else if (etNickname.getText().length() < 4 || etNickname.getText().length() > 16) {
+                    Snackbar.make(v, "Nickname harus terdiri dari 4-16 karakter", Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
                     Intent i = new Intent(MainActivity.this,MenuActivity.class);
@@ -163,9 +167,9 @@ public class MainActivity extends AppCompatActivity {
 
                 .build();
 
-        String imgUrl="http://125.208.135.124:7777/static/home/bg_doodle.jpg";
+        String background= APIClient.BASE_URL +  "static/home/bg_doodle.jpg";
 
-        imageLoader.displayImage(imgUrl, image, options);
+        imageLoader.displayImage(background, image, options);
 
 
     }

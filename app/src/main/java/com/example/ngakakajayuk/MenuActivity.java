@@ -15,7 +15,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ngakakajayuk.Data.API.APIClient;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +53,8 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         ButterKnife.bind(this);
+
+        loadImage();
 
         dialogExit = new Dialog(this);
 
@@ -155,4 +164,68 @@ public class MenuActivity extends AppCompatActivity {
         dialogExit.show();
 
     }
+
+    private void loadImage() {
+
+        ImageView image = findViewById(R.id.image_anim);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+
+                // Thread priority
+
+                .threadPriority(Thread.NORM_PRIORITY)
+
+                // Deny cache multiple image sizes on memory
+
+                .denyCacheImageMultipleSizesInMemory()
+
+                // Processing order like a stack (last in, first out)
+
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+
+                // Max image size to cache on memory
+
+                .memoryCacheSize(1*1024*2014)
+
+                // Max image size to cache on disc
+
+                .diskCacheSize(2*1024*1024)
+
+                // Write log messages
+
+                .writeDebugLogs()
+
+                .build();
+
+        ImageLoader.getInstance().init(config);
+
+
+
+        // Get ImageLoader instance
+
+        ImageLoader imageLoader=ImageLoader.getInstance();
+
+        // Define image display options
+
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+
+                // Cache loaded image in memory and disc
+
+                .cacheOnDisk(true)
+
+                .cacheInMemory(true)
+
+                // Show Android icon while loading
+
+                .build();
+
+        String background= APIClient.BASE_URL +  "static/home/bg_doodle.jpg";
+
+        imageLoader.displayImage(background, image, options);
+
+
+    }
+
 }

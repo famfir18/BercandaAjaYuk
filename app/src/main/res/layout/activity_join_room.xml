@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="-50dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/bg_doodle"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
@@ -61,6 +60,7 @@
                 android:backgroundTint="#81D4FA"
                 android:scaleType="centerCrop"
                 android:textAlignment="center"
+                android:inputType="textCapCharacters"
                 android:textColor="#fff"
                 android:fontFamily="@font/chalkduster"
                 android:layout_centerHorizontal="true"
@@ -86,7 +86,7 @@
                 android:scaleType="centerCrop"
                 android:textAlignment="center"
                 android:textCursorDrawable="@drawable/curzor"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:textColor="#FFF"
                 android:fontFamily="@font/chalkduster"
                 android:layout_centerHorizontal="true"

@@ -66,7 +66,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
     @Override
     public int getItemCount() {
         if(myList != null){
-            return 10;
+            return 7;
         }
         return 0;
 

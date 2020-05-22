@@ -33,6 +33,6 @@ public interface RestService {
                                 @Path("id_room") String idRoom);
 
     @GET("ruang/{id_room}/")
-    Call<DataRoom> GetInfoRoom(@Path("id_room") String idRoom);
+    Call<DataRoom> getInfoRoom(@Path("id_room") String idRoom);
 
 }

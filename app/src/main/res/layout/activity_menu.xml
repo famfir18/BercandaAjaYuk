@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="-50dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/bg_doodle"
         android:scaleType="centerCrop" />
 
     <RelativeLayout

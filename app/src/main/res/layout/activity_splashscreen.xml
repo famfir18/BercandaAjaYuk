@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Splashscreen">
+
+    <ImageView
+        android:id="@+id/background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +26,8 @@
         <ImageView
             android:id="@+id/iv_logo_dev"
             android:layout_width="200dp"
-            android:layout_height="300dp"
-            app:srcCompat="@drawable/logo_dev" />
+            android:src="@drawable/logo_dev"
+            android:layout_height="300dp"/>
 
         <TextView
             android:id="@+id/tv_logo_dev"
@@ -48,4 +55,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

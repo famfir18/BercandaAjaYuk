@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ngakakajayuk.Data.API.APIClient;
@@ -19,6 +20,10 @@ import com.example.ngakakajayuk.Data.JSON.DataQuestion;
 import com.example.ngakakajayuk.Data.JSON.DataRoom;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.List;
 import java.util.Objects;
@@ -61,6 +66,8 @@ public class CreateRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_room);
 
         ButterKnife.bind(this);
+
+        loadImage();
 
         Intent getIntent = getIntent();
         textNick = getIntent.getStringExtra("nickName");
@@ -172,6 +179,7 @@ public class CreateRoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 stringNoPlayer = etNoPlayer.getText().toString();
                 String roomPassword = etRoomPassword.getText().toString();
+                int roomPasswordLength = etRoomPassword.getText().length();
 
                 int noPlayer = 0;
                 try {
@@ -182,19 +190,91 @@ public class CreateRoomActivity extends AppCompatActivity {
 
                 if (noPlayer > 5 || noPlayer < 3 || stringNoPlayer.matches("")){
 
+                    click.start();
                     etNoPlayer.startAnimation(shake);
                     Snackbar.make(v, "Game ini hanya bisa dimainkan oleh 3-5 orang saja", Snackbar.LENGTH_SHORT)
                             .show();
                 } else if (stringNoPlayer != null && roomPassword.matches("")){
+                    click.start();
                     etRoomPassword.startAnimation(shake);
                     Snackbar.make(v, "Masukkan Room Password", Snackbar.LENGTH_SHORT)
+                            .show();
+                } else if (roomPasswordLength != 6){
+                    click.start();
+                    etRoomPassword.startAnimation(shake);
+                    Snackbar.make(v, "Password harus terdiri dari 6 angka", Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
                     click.start();
                     createRoom();
-
                 }
+
+
             }
         });
     }
+
+    private void loadImage() {
+
+        ImageView image = findViewById(R.id.image_anim);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+
+                // Thread priority
+
+                .threadPriority(Thread.NORM_PRIORITY)
+
+                // Deny cache multiple image sizes on memory
+
+                .denyCacheImageMultipleSizesInMemory()
+
+                // Processing order like a stack (last in, first out)
+
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+
+                // Max image size to cache on memory
+
+                .memoryCacheSize(1*1024*2014)
+
+                // Max image size to cache on disc
+
+                .diskCacheSize(2*1024*1024)
+
+                // Write log messages
+
+                .writeDebugLogs()
+
+                .build();
+
+        ImageLoader.getInstance().init(config);
+
+
+
+        // Get ImageLoader instance
+
+        ImageLoader imageLoader=ImageLoader.getInstance();
+
+        // Define image display options
+
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+
+                // Cache loaded image in memory and disc
+
+                .cacheOnDisk(true)
+
+                .cacheInMemory(true)
+
+                // Show Android icon while loading
+
+                .build();
+
+        String background= APIClient.BASE_URL +  "static/home/bg_doodle.jpg";
+
+        imageLoader.displayImage(background, image, options);
+
+
+    }
+
 }

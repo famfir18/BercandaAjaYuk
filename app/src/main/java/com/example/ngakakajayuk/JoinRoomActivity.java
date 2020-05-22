@@ -3,12 +3,14 @@ package com.example.ngakakajayuk;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ngakakajayuk.Data.API.APIClient;
@@ -16,12 +18,13 @@ import com.example.ngakakajayuk.Data.API.RestService;
 import com.example.ngakakajayuk.Data.JSON.DataRoom;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-
-import java.util.List;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,12 +53,18 @@ public class JoinRoomActivity extends AppCompatActivity {
 
     String codeRoom;
 
+    MediaPlayer click;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_room);
 
         ButterKnife.bind(this);
+
+        click = MediaPlayer.create(this, R.raw.click_effect);
+
+        loadImage();
 
         Intent getIntent = getIntent();
 
@@ -73,15 +82,25 @@ public class JoinRoomActivity extends AppCompatActivity {
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int roomPasswordLength = etRoomPassword.getText().length();
+
                 if (etRoomCode.getText().toString().matches("")) {
+                    click.start();
                     etRoomCode.startAnimation(shake);
-                    Snackbar.make(v, "Masukkan Room Code", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(v, "Masukkan room code", Snackbar.LENGTH_SHORT)
                             .show();
                 } else if (etRoomCode.getText().toString() != null && etRoomPassword.getText().toString().matches("")) {
+                    click.start();
                     etRoomPassword.startAnimation(shake);
-                    Snackbar.make(v, "Masukkan Room Password", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(v, "Masukkan room password", Snackbar.LENGTH_SHORT)
+                            .show();
+                } else if (roomPasswordLength != 6){
+                    click.start();
+                    etRoomPassword.startAnimation(shake);
+                    Snackbar.make(v, "Room password harus terdiri dari 6 angka", Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
+                    click.start();
                     codeRoom = etRoomCode.getText().toString();
                     passwordRoom = etRoomPassword.getText().toString();
 
@@ -106,7 +125,7 @@ public class JoinRoomActivity extends AppCompatActivity {
     private void gettingIDRoom() {
 
         RestService restService = APIClient.joinRoom().create(RestService.class);
-        Call<DataRoom> callz = restService.GetInfoRoom(idRoom);
+        Call<DataRoom> callz = restService.getInfoRoom(idRoom);
 
         callz.enqueue(new Callback<DataRoom>(){
             @Override
@@ -207,6 +226,7 @@ public class JoinRoomActivity extends AppCompatActivity {
                     }
 
                 } else {
+                    etRoomCode.startAnimation(shake);
                     Toast.makeText(getApplicationContext(), "Room code tidak ditemukan/ salah, mohon teliti huruf kapital dalam pengisian room code", Toast.LENGTH_LONG).show();
                 }
 
@@ -223,4 +243,68 @@ public class JoinRoomActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void loadImage() {
+
+        ImageView image = findViewById(R.id.image_anim);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+
+                // Thread priority
+
+                .threadPriority(Thread.NORM_PRIORITY)
+
+                // Deny cache multiple image sizes on memory
+
+                .denyCacheImageMultipleSizesInMemory()
+
+                // Processing order like a stack (last in, first out)
+
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+
+                // Max image size to cache on memory
+
+                .memoryCacheSize(1*1024*2014)
+
+                // Max image size to cache on disc
+
+                .diskCacheSize(2*1024*1024)
+
+                // Write log messages
+
+                .writeDebugLogs()
+
+                .build();
+
+        ImageLoader.getInstance().init(config);
+
+
+
+        // Get ImageLoader instance
+
+        ImageLoader imageLoader=ImageLoader.getInstance();
+
+        // Define image display options
+
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+
+                // Cache loaded image in memory and disc
+
+                .cacheOnDisk(true)
+
+                .cacheInMemory(true)
+
+                // Show Android icon while loading
+
+                .build();
+
+        String background= APIClient.BASE_URL +  "static/home/bg_doodle.jpg";
+
+        imageLoader.displayImage(background, image, options);
+
+
+    }
+
 }

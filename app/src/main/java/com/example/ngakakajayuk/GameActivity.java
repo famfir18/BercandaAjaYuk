@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ngakakajayuk.Adapter.AnswerAdapter;
@@ -18,10 +19,14 @@ import com.example.ngakakajayuk.Data.API.APIClient;
 import com.example.ngakakajayuk.Data.API.RestService;
 import com.example.ngakakajayuk.Data.JSON.DataAnswer;
 import com.example.ngakakajayuk.Data.JSON.DataQuestion;
+import com.example.ngakakajayuk.Data.JSON.DataRoom;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,12 +53,16 @@ public class GameActivity extends AppCompatActivity
 
     MediaPlayer click;
 
+    int pertanyaanNow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         ButterKnife.bind(this);
+
+        loadImage();
 
         click = MediaPlayer.create(this,R.raw.click_effect);
 
@@ -79,9 +88,12 @@ public class GameActivity extends AppCompatActivity
         TextView idRoom;
 
         Intent getIntent = getIntent();
-        if (getIntent.getExtras() != null){
+        try {
             texIdRooms = getIntent.getStringExtra("idRoom");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
         beforeGameStarted.setContentView(R.layout.dialog_before_game_started);
 
@@ -141,38 +153,46 @@ public class GameActivity extends AppCompatActivity
 
     private void getDataQuestion() {
 
+        Intent getIntent = getIntent();
+        String texIdRoomsz = null;
+        try {
+            texIdRoomsz = getIntent.getStringExtra("idRoom");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Gson gson = new Gson();
-
         RestService restService = APIClient.getClient().create(RestService.class);
-        Call<List<DataQuestion>> call = restService.getDataQuestion();
 
-        call.enqueue(new Callback<List<DataQuestion>>() {
-            @Override
-            public void onResponse(Call<List<DataQuestion>> call, Response<List<DataQuestion>> response) {
+        Call<DataRoom> call = restService.getInfoRoom(texIdRoomsz);
 
-                Random random = new Random();
-                int length = response.body().size();
+                call.enqueue(new Callback<DataRoom>() {
+                    @Override
+                    public void onResponse(Call<DataRoom> call, Response<DataRoom> response) {
+                        pertanyaanNow = response.body().getPertanyaanNow() - 1;
+                        System.out.println("Pertanyaan now itu " + pertanyaanNow);
 
-                for (int i = 0; i < length; i++){
+                        RestService restService = APIClient.getClient().create(RestService.class);
 
-                    int randomInteger = random.nextInt(length);
+                        Call<List<DataQuestion>> callz = restService.getDataQuestion();
+                        callz.enqueue(new Callback<List<DataQuestion>>() {
+                            @Override
+                            public void onResponse(Call<List<DataQuestion>> call, Response<List<DataQuestion>> response) {
+                                contentQuestion.setText(response.body().get(pertanyaanNow).getPertanyaan());
+                                System.out.println("Pertanyaan now " + pertanyaanNow);
+                            }
 
-                    if (response.isSuccessful()){
-                        contentQuestion.setText(response.body().get(randomInteger).getPertanyaan());
+                            @Override
+                            public void onFailure(Call<List<DataQuestion>> call, Throwable t) {
 
-                        System.out.println("Hasil Datanya Adalah : ");
+                            }
+                        });
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<DataQuestion>> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<DataRoom> call, Throwable t) {
 
-                System.out.println("Gagaaal ");
-                t.getCause();
-
-            }
-        });
+                    }
+                });
     }
 
     /*@Override
@@ -234,4 +254,68 @@ public class GameActivity extends AppCompatActivity
         dialogExit.show();
 
     }
+
+    private void loadImage() {
+
+        ImageView image = findViewById(R.id.image_anim);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+
+                // Thread priority
+
+                .threadPriority(Thread.NORM_PRIORITY)
+
+                // Deny cache multiple image sizes on memory
+
+                .denyCacheImageMultipleSizesInMemory()
+
+                // Processing order like a stack (last in, first out)
+
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+
+                // Max image size to cache on memory
+
+                .memoryCacheSize(1*1024*2014)
+
+                // Max image size to cache on disc
+
+                .diskCacheSize(2*1024*1024)
+
+                // Write log messages
+
+                .writeDebugLogs()
+
+                .build();
+
+        ImageLoader.getInstance().init(config);
+
+
+
+        // Get ImageLoader instance
+
+        ImageLoader imageLoader=ImageLoader.getInstance();
+
+        // Define image display options
+
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+
+                // Cache loaded image in memory and disc
+
+                .cacheOnDisk(true)
+
+                .cacheInMemory(true)
+
+                // Show Android icon while loading
+
+                .build();
+
+        String background= APIClient.BASE_URL +  "static/home/bg_doodle.jpg";
+
+        imageLoader.displayImage(background, image, options);
+
+
+    }
+
 }
