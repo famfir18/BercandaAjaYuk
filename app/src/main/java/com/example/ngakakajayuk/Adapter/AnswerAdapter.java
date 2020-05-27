@@ -1,5 +1,6 @@
 package com.example.ngakakajayuk.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
 
     public void setMovieList(List<DataAnswer> myList) {
         this.myList = myList;
+        Collections.shuffle(myList);
         notifyDataSetChanged();
     }
 
@@ -48,14 +50,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
 
         final Animation animSelected = AnimationUtils.loadAnimation(context, R.anim.anim_selected_card);
 
-        Collections.shuffle(myList);
-//        DataAnswer dataAnswer = myList.get(position);
-
-
-//        Random random = new Random();
-//
-//        int randomz = random.nextInt(myList.size());
-        for (int i = 0; i < position; i++)
         holder.tvAnswer.setText(myList.get(position).getJawaban());
 
         holder.itemView.setOnClickListener(v -> {
