@@ -18,7 +18,7 @@
         <activity android:name=".JoinRoomActivity"></activity>
         <activity android:name=".CreateRoomActivity" />
         <activity android:name=".MenuActivity" />
-        <activity android:name=".GameActivity" />
+        <activity android:name=".GameActivity" android:noHistory="true"/>
         <activity
             android:name=".Splashscreen"
             android:noHistory="true"

@@ -6,7 +6,7 @@ import com.example.ngakakajayuk.Data.JSON.DataQuestion;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -34,5 +34,8 @@ public interface RestService {
 
     @GET("ruang/{id_room}/")
     Call<DataRoom> getInfoRoom(@Path("id_room") String idRoom);
+
+    @GET("ruang/{id_room}/")
+    Observable<DataRoom> getObservableRoom(@Path("id_room") String idRoom);
 
 }

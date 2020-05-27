@@ -34,6 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.ngakakajayuk.Data.API.APIClient.BASE_URL;
+
 public class GameActivity extends AppCompatActivity
         implements  AnswerAdapter.OnItemSelected{
 
@@ -311,7 +313,7 @@ public class GameActivity extends AppCompatActivity
 
                 .build();
 
-        String background= APIClient.BASE_URL +  "static/home/bg_doodle.jpg";
+        String background= BASE_URL +  "static/home/bg_doodle.jpg";
 
         imageLoader.displayImage(background, image, options);
 

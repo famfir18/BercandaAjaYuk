@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ngakakajayuk.Data.JSON.DataAnswer;
 import com.example.ngakakajayuk.R;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +21,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
     Context context;
     List<DataAnswer> myList;
     OnItemSelected onItemSelected;
+    private Random random = new Random();
+    private int randomz = random.nextInt(100);
 
 
     public AnswerAdapter(Context context, List<DataAnswer> myList,
@@ -38,8 +41,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
     public AnswerAdapter.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.form_answer,parent,false);
         return new MyviewHolder(view);
-
-
     }
 
     @Override
@@ -47,15 +48,15 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
 
         final Animation animSelected = AnimationUtils.loadAnimation(context, R.anim.anim_selected_card);
 
-        DataAnswer dataAnswer = myList.get(position);
+        Collections.shuffle(myList);
+//        DataAnswer dataAnswer = myList.get(position);
 
 
-        Random random = new Random();
-
-        int randomz = random.nextInt(myList.size());
-
-
-        holder.tvAnswer.setText(myList.get(randomz).getJawaban());
+//        Random random = new Random();
+//
+//        int randomz = random.nextInt(myList.size());
+        for (int i = 0; i < position; i++)
+        holder.tvAnswer.setText(myList.get(position).getJawaban());
 
         holder.itemView.setOnClickListener(v -> {
 //            onItemSelected.onSelected(dataAnswer);

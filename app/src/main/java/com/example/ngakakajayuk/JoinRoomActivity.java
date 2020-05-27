@@ -222,6 +222,7 @@ public class JoinRoomActivity extends AppCompatActivity {
                             }
                         });
                         Intent i = new Intent(JoinRoomActivity.this, GameActivity.class);
+                        i.putExtra("roomCode", codeRoom);
                         startActivity(i);
                     }
 

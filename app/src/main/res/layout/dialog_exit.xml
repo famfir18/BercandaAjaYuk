@@ -40,11 +40,12 @@
                 <TextView
                     android:id="@+id/tv_username"
                     android:layout_gravity="center"
-                    android:textSize="15dp"
+                    android:textSize="13dp"
                     android:textStyle="bold"
                     android:fontFamily="@font/doodle"
                     android:textColor="#333333"
-                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=" Yakin Mau Keluar?"/>
 

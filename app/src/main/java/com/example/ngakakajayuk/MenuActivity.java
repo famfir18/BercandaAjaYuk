@@ -41,7 +41,7 @@ public class MenuActivity extends AppCompatActivity {
     ImageButton btnExit;
 
     Handler handler = new Handler();
-    final static int DELAY = 1000;
+    final static int DELAY = 500;
 
     Dialog dialogExit;
 
@@ -58,7 +58,7 @@ public class MenuActivity extends AppCompatActivity {
 
         dialogExit = new Dialog(this);
 
-        final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_scale);
 
         MediaPlayer click = MediaPlayer.create(this,R.raw.click_effect);
 
