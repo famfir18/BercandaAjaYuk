@@ -24,6 +24,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -130,6 +132,7 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 });
 
+                Objects.requireNonNull(dialogExit.getWindow()).setBackgroundDrawableResource(R.color.transparent);
                 dialogExit.show();
             }
         });
@@ -161,6 +164,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        Objects.requireNonNull(dialogExit.getWindow()).setBackgroundDrawableResource(R.color.transparent);
         dialogExit.show();
 
     }

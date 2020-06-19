@@ -1,6 +1,7 @@
 package com.example.ngakakajayuk;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,7 +11,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +31,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +46,12 @@ public class GameActivity extends AppCompatActivity
 
     @BindView(R.id.rv_answer)
     RecyclerView recyclerView;
+    @BindView(R.id.roomCodeToolbar)
+    TextView roomCodeToolbar;
+    @BindView(R.id.scoreToolbar)
+    TextView scoreToolbar;
+    @BindView(R.id.btn_leaderboard)
+    ImageButton btnLeaderboard;
 
 //    MediaPlayer bgm;
     TextView contentQuestion;
@@ -57,6 +68,9 @@ public class GameActivity extends AppCompatActivity
 
     int pertanyaanNow;
 
+    Dialog dialog;
+    Dialog dialogLeaderboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +86,34 @@ public class GameActivity extends AppCompatActivity
 
         contentQuestion = findViewById(R.id.content_question);
 
+        final Animation animations = AnimationUtils.loadAnimation(this, R.anim.anim_scale_dialog);
+
+
 
         dialogExit = new Dialog(this);
+        dialogLeaderboard = new Dialog(this);
+
+        Intent getIntent = getIntent();
+        try {
+            texIdRooms = getIntent.getStringExtra("idRoom");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        roomCodeToolbar.setText(texIdRooms);
+
+        btnLeaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CardView cardView;
+                dialogLeaderboard.setContentView(R.layout.dialog_leaderboard);
+                cardView = dialogLeaderboard.findViewById(R.id.cardlayout);
+
+                cardView.startAnimation(animations);
+                Objects.requireNonNull(dialogLeaderboard.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+                dialogLeaderboard.show();
+            }
+        });
 
 //        bgm = MediaPlayer.create(this, R.raw.bgm);
 //        bgm.setLooping(true);
@@ -88,14 +128,6 @@ public class GameActivity extends AppCompatActivity
     private void displayDialog() {
         Button shareId;
         TextView idRoom;
-
-        Intent getIntent = getIntent();
-        try {
-            texIdRooms = getIntent.getStringExtra("idRoom");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
         beforeGameStarted.setContentView(R.layout.dialog_before_game_started);
 
@@ -114,6 +146,7 @@ public class GameActivity extends AppCompatActivity
             }
         });
 
+        Objects.requireNonNull(beforeGameStarted.getWindow()).setBackgroundDrawableResource(R.color.transparent);
         beforeGameStarted.show();
     }
 
@@ -129,7 +162,7 @@ public class GameActivity extends AppCompatActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerAdapter = new AnswerAdapter(getApplicationContext(),myList, this);
+        recyclerAdapter = new AnswerAdapter(getApplicationContext(), myList, this);
         recyclerView.setAdapter(recyclerAdapter);
 
         RestService apiService = APIClient.getClient().create(RestService.class);
@@ -224,7 +257,22 @@ public class GameActivity extends AppCompatActivity
     }*/
 
     @Override
-    public void onSelected(DataAnswer dataTestSDG) {
+    public void onSelected(DataAnswer dataAnswer) {
+
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_scale_dialog);
+
+        dialog = new Dialog(this);
+        TextView jawaban;
+        CardView cardView;
+
+        dialog.setContentView(R.layout.dialog_answer_card);
+        jawaban = dialog.findViewById(R.id.content_answer);
+        cardView = dialog.findViewById(R.id.cardlayout);
+
+        cardView.startAnimation(animation);
+        jawaban.setText(dataAnswer.getJawaban());
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+        dialog.show();
 
     }
 
@@ -252,6 +300,8 @@ public class GameActivity extends AppCompatActivity
                 dialogExit.dismiss();
             }
         });
+
+        Objects.requireNonNull(dialogExit.getWindow()).setBackgroundDrawableResource(R.color.transparent);
 
         dialogExit.show();
 

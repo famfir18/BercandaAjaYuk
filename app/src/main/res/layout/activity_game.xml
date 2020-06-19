@@ -17,18 +17,102 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+        <androidx.cardview.widget.CardView
+            android:id="@+id/toolbar"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorPrimaryTransparent"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_height="70dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/chalkduster"
+                    android:textColor="@color/white"
+                    android:text="Room Code"/>
+
+                <TextView
+                    android:id="@+id/roomCodeToolbar"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/chalkduster"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="VKAJ"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/chalkduster"
+                    android:textColor="@color/white"
+                    android:text="Your Score"/>
+
+                <TextView
+                    android:id="@+id/scoreToolbar"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/chalkduster"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="5"/>
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btn_leaderboard"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_leaderboard"
+                android:background="@color/transparent"
+                android:tint="@color/white"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+        android:layout_below="@id/toolbar"
+        android:id="@+id/petanyaan"
         android:layout_width="200dp"
         android:layout_height="240dp"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        app:cardBackgroundColor="#1A61AD"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -53,10 +137,11 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/petanyaan"
         android:id="@+id/rv_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>

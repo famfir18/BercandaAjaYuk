@@ -6,13 +6,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:background="#00FFFFFF"
+        android:background="@color/transparent"
         android:layout_height="400dp"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="400dp"
+            android:background="@color/transparent"
             android:src="@drawable/dialog_exit"/>
 
         <LinearLayout
@@ -46,7 +47,7 @@
                     android:textColor="#333333"
                     android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
                     android:text=" Yakin Mau Keluar?"/>
 
                 <LinearLayout

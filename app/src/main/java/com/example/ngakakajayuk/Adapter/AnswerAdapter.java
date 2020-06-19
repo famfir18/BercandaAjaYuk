@@ -32,7 +32,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
         this.myList = myList;
         this.onItemSelected = onItemSelected;
     }
-
     public void setMovieList(List<DataAnswer> myList) {
         this.myList = myList;
         Collections.shuffle(myList);
@@ -49,12 +48,17 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyviewHold
     public void onBindViewHolder(AnswerAdapter.MyviewHolder holder, int position) {
 
         final Animation animSelected = AnimationUtils.loadAnimation(context, R.anim.anim_selected_card);
+        Dialog dialogCard = new Dialog(context);
+        dialogCard.setContentView(R.layout.dialog_answer_card);
 
-        holder.tvAnswer.setText(myList.get(position).getJawaban());
+        DataAnswer dataAnswer = myList.get(position);
+
+        holder.tvAnswer.setText(dataAnswer.getJawaban());
 
         holder.itemView.setOnClickListener(v -> {
-//            onItemSelected.onSelected(dataAnswer);
-            v.startAnimation(animSelected);
+            onItemSelected.onSelected(dataAnswer);
+//            v.startAnimation(animSelected);
+//            dialogCard.show();
         });
     }
 

@@ -141,7 +141,8 @@ public class JoinRoomActivity extends AppCompatActivity {
                     String passwordRuangan = response.body().getRoomPassword();
 
                     if (!passwordRoom.equals(passwordRuangan)){
-                        Toast.makeText(getApplicationContext(), "Password Salah", Toast.LENGTH_LONG).show();
+                        etRoomPassword.startAnimation(shake);
+                        Toast.makeText(getApplicationContext(), "Password Salah", Toast.LENGTH_SHORT).show();
                     } else {
 
 //                    idRoom = etRoomCode.getText().toString();
@@ -166,8 +167,9 @@ public class JoinRoomActivity extends AppCompatActivity {
                                 dataRoom.setPemain5(textNick.trim());
                             } else {
                                 dataRoom.setPertanyaanNow(pertanyaanNow);
-                                dataRoom.setJumlahPemain(4);
-                                Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_LONG).show();
+                                dataRoom.setJumlahPemain(5);
+                                etRoomCode.startAnimation(shake);
+                                Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_SHORT).show();
                             }
                         } else if (jumlahPemain == 4){
                             if (pemain2 == null || pemain2.equals("")){
@@ -185,7 +187,8 @@ public class JoinRoomActivity extends AppCompatActivity {
                             } else {
                                 dataRoom.setPertanyaanNow(pertanyaanNow);
                                 dataRoom.setJumlahPemain(4);
-                                Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_LONG).show();
+                                etRoomCode.startAnimation(shake);
+                                Toast.makeText(getApplicationContext(), "Room Sudah Penuh" , Toast.LENGTH_SHORT).show();
                             }
                         } else if (jumlahPemain == 3) {
                             if (pemain2 == null || pemain2.equals("")) {
@@ -199,7 +202,8 @@ public class JoinRoomActivity extends AppCompatActivity {
                             } else {
                                 dataRoom.setPertanyaanNow(pertanyaanNow);
                                 dataRoom.setJumlahPemain(3);
-                                Toast.makeText(getApplicationContext(), "Room Sudah Penuh", Toast.LENGTH_LONG).show();
+                                etRoomCode.startAnimation(shake);
+                                Toast.makeText(getApplicationContext(), "Room Sudah Penuh", Toast.LENGTH_SHORT).show();
                             }
                         }
 

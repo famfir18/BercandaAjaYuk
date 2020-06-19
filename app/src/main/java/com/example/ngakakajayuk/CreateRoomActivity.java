@@ -133,12 +133,23 @@ public class CreateRoomActivity extends AppCompatActivity {
 
 
         int random = getRandomNumberInRange(1,jumlahPertanyan);
+        int randomJudge = getRandomNumberInRange(1,jumlahPemain);
 
         DataRoom dataRoom = new DataRoom();
         dataRoom.setPemain1(textNick.trim());
         dataRoom.setPertanyaanNow(random);
         dataRoom.setRoomPassword(roomPassword);
         dataRoom.setJumlahPemain(jumlahPemain);
+        dataRoom.setSiapaJurinya(String.valueOf(randomJudge));
+
+        /*switch (randomJudge) {
+            case 1 :
+                dataRoom.setSiapaJurinya(dataRoom.getPemain1());
+                break;
+            case 2 :
+                dataRoom.setSiapaJurinya(dataRoom.getPemain2());
+                break;
+        }*/
 
         RestService restService = APIClient.createNewRoom().create(RestService.class);
         Call<DataRoom> call = restService.createNewRoom(dataRoom);
